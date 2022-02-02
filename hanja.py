@@ -96,7 +96,7 @@ def question2(hanja, hanjas, num_examples=5, num=None):
         print('맞았습니다. 축하합니다')
     else:
         correct = False
-        print('틀렸습니다. %s %s 자는 %d번입니다' % (meaning, sound, idx))
+        print('틀렸습니다. %s %s 자는 %d번입니다' % (meaning, sound, idx+1))
     time.sleep(1)
     return correct
 
