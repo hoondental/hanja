@@ -45,7 +45,7 @@ def question1(hanja, num=None):
     answered = False
     for i in range(3):
         try:
-            ans = input(prefix + char + ' 의 뜻과 소리를 쓰시오')
+            ans = input(prefix + char + ' 의 뜻과 소리를 쓰시오     ')
             m, s = ans.strip().split()
         except:
             print('한자의 뜻과 소리를 띄어서 입력하세요')
@@ -59,7 +59,7 @@ def question1(hanja, num=None):
     else:
         correct = False
         print('틀렸습니다. 이 한자는 %s %s 입니다.' % (meaning, sound))
-    time.sleep(3)
+    time.sleep(1)
     return correct
                 
 
@@ -74,7 +74,7 @@ def question2(hanja, hanjas, num_examples=5, num=None):
     examples = np.random.choice(chars, num_examples, replace=False)
     indexes = list(range(num_examples))
     if char in examples:
-        idx = examples.index(hanja)
+        idx = examples.tolist().index(char)
     else:
         idx = np.random.choice(indexes)
         examples[idx] = char
@@ -82,7 +82,7 @@ def question2(hanja, hanjas, num_examples=5, num=None):
     for i in range(3):
         try:
             _examples = '   '.join(['(' + str(i+1) +')' + c  for i, c in enumerate(examples)])
-            ans = input(prefix + '다음 보기들중 %s %s 자를 고르세요' % (meaning, sound) + '\n' + _examples)           
+            ans = input(prefix + '다음 보기들중 %s %s 자를 고르세요' % (meaning, sound) + '\n' + _examples + '     ')           
             _idx = int(ans) - 1
             assert _idx in indexes
         except:
@@ -97,7 +97,7 @@ def question2(hanja, hanjas, num_examples=5, num=None):
     else:
         correct = False
         print('틀렸습니다. %s %s 자는 %d번입니다' % (meaning, sound, idx))
-    time.sleep(3)
+    time.sleep(1)
     return correct
 
 def question3(hanja, num=None):
@@ -107,9 +107,9 @@ def question3(hanja, num=None):
     '''    
     prefix = '##########  ' + str(num) + '번  ########## \n' if num is not None else '############################\n'
     char, meaning, sound = hanja
-    input(prefix + '%s %s 자를 노트에 써보세요, 다 쓴 후에 아무글자나 입력하세요' % (meaning, sound))
+    input(prefix + '%s %s 자를 노트에 써보세요, 다 쓴 후에 아무글자나 입력하세요     ' % (meaning, sound))
     print(char, ' 답이 맞았는지 확인하고 틀렸으면 답을 보고 다시 써보세요')
-    ans = input('맞았으면 1, 틀렸으면 2를 입력해주세요')
+    ans = input('맞았으면 1, 틀렸으면 2를 입력해주세요     ')
     try:
         ans = int(ans)
     except:
