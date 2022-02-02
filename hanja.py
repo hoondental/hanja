@@ -2,7 +2,9 @@ import os
 import time
 import datetime
 import numpy as np
-
+import random
+from itertools import permutations
+from IPython.display import clear_output
 
 def read_hanjas(path):
     '''
@@ -121,3 +123,53 @@ def question3(hanja, num=None):
             return False
     
 
+
+def hanja_practice(qtype, hanjas, thanjas, basic_iter=2, num_extra=100, num_examples=4):
+    assert qtype in (1, 2, 3)
+    def question(hanja, num):
+        if qtype == 1:
+            return question1(hanja, num)
+        elif qtype == 2:
+            return question2(hanja, hanjas, num_examples=num_examples, num=num)
+        elif qtype == 3:
+            return question3(hanja, num)
+    
+    wrong_score = {h: 2 + basic_iter for h in thanjas}
+    
+    print('^^^^^^^^^^ 전체 문제를 %d 회 반복합니다. ^^^^^^^^^^^' % basic_iter)
+    time.sleep(2)
+    clear_output(wait=True)
+    for it in range(basic_iter): 
+        _thanjas = [thanjas[i] for i in np.random.permutation(list(range(len(thanjas))))]
+        for i, hanja in enumerate(_thanjas):
+            clear_output(wait=True)
+            correct = question(hanja, num=i+1)
+            if correct:
+                wrong_score[hanja] = max(1, wrong_score[hanja] / 2.0)
+            else:
+                wrong_score[hanja] *= 2.0
+            clear_output(wait=True)
+    
+    print('^^^^^^^^^^ 문제 풀이 성적을 고려하여 %d 문제를 더 풀겠습니다. ^^^^^^^^^^^' % num_q1)
+    time.sleep(2)      
+    pcount = 0
+    clear_output(wait=True)
+    while pcount < num_extra:
+        wrong_sum = sum(list(wrong_score.values()))
+        wprob = [s / wrong_sum for s in wrong_score.values()]
+        idxes = np.random.choice(list(range(len(thanjas))), 5, replace=False, p=wprob)
+        for idx in idxes:
+            pcount += 1
+            hanja = thanjas[idx]
+            clear_output(wait=True)
+            correct = question(hanja, pcount)
+            if correct:
+                wrong_score[hanja] = max(1, wrong_score[hanja] / 2.0)
+            else:
+                wrong_score[hanja] *= 2.0
+            print(wrong_score)
+            time.sleep(1)
+            clear_output(wait=True)
+            if pcount == num_extra:
+                break    
+    
