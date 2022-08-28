@@ -14,6 +14,7 @@ def read_hanjas(path):
         lines = f.readlines()
     hanjas = []
     for line in lines:
+        print(line)
         char, meaning, sound = line.strip().split()
         hanjas.append((char, meaning, sound))
     return hanjas
@@ -36,6 +37,20 @@ def read_level_hanjas(dir_db, levels):
         level_hanjas[level] = _hanjas
         hanjas.extend(_hanjas)
     return hanjas, level_hanjas
+
+
+def question0(hanja, num=None):
+    '''
+    한자, 뜻 음 을 보여줌
+    '''
+    prefix = '##########  ' + str(num) + '번  ########## \n' if num is not None else '############################\n'
+    char, meaning, sound = hanja
+    ans = input(prefix + f'{char}    {meaning}    {sound}\n\n' + '잘 알고 있는 한자이면 아무 글자나 입력후 엔터키를, 다시 공부하고 싶은 한자이면 그냥 엔터키를 입력하세요')
+    if len(ans) > 0:
+        return True
+    else:
+        return False
+
 
 
 def question1(hanja, num=None):
@@ -125,9 +140,11 @@ def question3(hanja, num=None):
 
 
 def hanja_practice(qtype, hanjas, thanjas, basic_iter=2, num_extra=100, num_examples=4):
-    assert qtype in (1, 2, 3)
+    assert qtype in (0, 1, 2, 3)
     def question(hanja, num):
-        if qtype == 1:
+        if qtype == 0:
+            return question0(hanja, num)
+        elif qtype == 1:
             return question1(hanja, num)
         elif qtype == 2:
             return question2(hanja, hanjas, num_examples=num_examples, num=num)
