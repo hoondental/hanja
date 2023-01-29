@@ -167,7 +167,7 @@ def hanja_practice(qtype, hanjas, thanjas, basic_iter=2, num_extra=100, num_exam
                 wrong_score[hanja] *= 2.0
             clear_output(wait=True)
     
-    print('^^^^^^^^^^ 문제 풀이 성적을 고려하여 %d 문제를 더 풀겠습니다. ^^^^^^^^^^^' % num_q1)
+    print('^^^^^^^^^^ 문제 풀이 성적을 고려하여 %d 문제를 더 풀겠습니다. ^^^^^^^^^^^' % num_extra)
     time.sleep(2)      
     pcount = 0
     clear_output(wait=True)
